@@ -8,7 +8,8 @@ namespace NetworkMessages
         PLAYER_UPDATE,
         SERVER_UPDATE,
         HANDSHAKE,
-        PLAYER_INPUT
+        PLAYER_INPUT,
+        PLAYER_DELETE
     }
 
     [System.Serializable]
@@ -23,6 +24,14 @@ namespace NetworkMessages
             cmd = Commands.HANDSHAKE;
             player = new NetworkObjects.NetworkPlayer();
         }
+        public HandshakeMsg(string _id, Color _cubeColor, Vector3 _cubPos)
+        {      // Constructor
+            cmd = Commands.HANDSHAKE;
+            player = new NetworkObjects.NetworkPlayer();
+            player.id = _id;
+            player.cubeColor = _cubeColor;
+            player.cubPos = _cubPos;
+        }
     }
     
     [System.Serializable]
@@ -31,6 +40,36 @@ namespace NetworkMessages
         public PlayerUpdateMsg(){      // Constructor
             cmd = Commands.PLAYER_UPDATE;
             player = new NetworkObjects.NetworkPlayer();
+        }
+
+        public PlayerUpdateMsg(string _id, Color _cubeColor, Vector3 _cubPos)
+        {      // Constructor
+            cmd = Commands.PLAYER_UPDATE;
+            player = new NetworkObjects.NetworkPlayer();
+            player.id = _id;
+            player.cubeColor = _cubeColor;
+            player.cubPos = _cubPos;
+        }
+    };
+
+    // Player Delete Message
+    [System.Serializable]
+    public class PlayerDeleteMsg : NetworkHeader
+    {
+        public NetworkObjects.NetworkPlayer player;
+        public PlayerDeleteMsg()
+        {      // Constructor
+            cmd = Commands.PLAYER_DELETE;
+            player = new NetworkObjects.NetworkPlayer();
+        }
+
+        public PlayerDeleteMsg(string _id, Color _cubeColor, Vector3 _cubPos)
+        {      // Constructor
+            cmd = Commands.PLAYER_DELETE;
+            player = new NetworkObjects.NetworkPlayer();
+            player.id = _id;
+            player.cubeColor = _cubeColor;
+            player.cubPos = _cubPos;
         }
     };
 
@@ -64,6 +103,7 @@ namespace NetworkObjects
 
         public NetworkPlayer(){
             cubeColor = new Color();
+            cubPos = new Vector3(0, 0, 0);
         }
     }
 }
